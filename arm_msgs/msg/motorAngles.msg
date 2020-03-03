@@ -1,0 +1,4 @@
+float32 baseAngle
+float32 mainAngle
+float32 secAngle
+float32 toolAngle

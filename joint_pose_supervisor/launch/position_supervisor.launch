@@ -1,0 +1,4 @@
+<launch>
+    <node name="position_supervisor_params" pkg="joint_pose_supervisor" type="position_supervisor_params.py" />
+    <node name="position_supervisor" pkg="joint_pose_supervisor" type="position_supervisor.py" />
+</launch>

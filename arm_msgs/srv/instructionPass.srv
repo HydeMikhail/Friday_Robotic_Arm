@@ -1,0 +1,8 @@
+bool request
+---
+string motionType
+float32 xCoor
+float32 yCoor
+float32 zCoor
+int16 velFac
+int16 accFac

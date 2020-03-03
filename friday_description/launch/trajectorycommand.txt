@@ -1,0 +1,1 @@
+rostopic pub -1 /arm_controller/command trajectory_msgs/JointTrajectory '{joint_names:['base_joint','main_joint','sec_joint','tool_joint'],points:[{positions:[0.5, 0.5, 0.5, 0.5],time_from_start:[1,0]}]}'

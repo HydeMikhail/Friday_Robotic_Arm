@@ -1,0 +1,6 @@
+<launch>    
+    <node name="data_frame_params" pkg="pose_data_frame" type="data_frame_params.py" />
+    <node name="data_frame_server" pkg="pose_data_frame" type="data_frame_server.py" >
+    <param name="filePath" value="$(find pose_data_frame)/testCoordinates.csv" />
+    </node>
+</launch>
