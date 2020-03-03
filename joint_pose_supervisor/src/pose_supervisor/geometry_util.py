@@ -66,29 +66,14 @@ class GeometryUtil(object):
                          self.secArmLength,
                          self.vector.pvLength)
 
-    def arm_poses(self):
+    def tool_pose(self):
         '''
         Compacts the separate arm angle function into one single call
         '''
         mainAng = self.main_pose()
         secAng = self.sec_pose()
         angleRemainder = pi - (mainAng + secAng)
-        toolAng = pi - angleRemainder - self.vector.pvAng
-        return mainAng, secAng, toolAng
-
-    def return_radians(self):
-        '''
-        Returns the angle of each motor as a list
-        '''
-        self.vector.define_vector()
-        if self.vector.vector_check():
-            baseAng = self.base_pose()
-            [mainAng, secAng, toolAng] = self.arm_poses()
-        else:
-            coordinateErrorMsg()
-            baseAng = 0
-            [mainAng, secAng, toolAng] = [0, 0, 0]
-        return [baseAng, mainAng, secAng, toolAng]
+        return pi - angleRemainder - self.vector.pvAng
 
 ############################################################
 ############################################################
@@ -112,3 +97,10 @@ def coordinateErrorMsg():
 
 
     '''
+if __name__ == '__main__':
+    util = GeometryUtil()
+    util.vector.xCoor = 1
+    util.vector.yCoor = 1
+    util.vector.zCoor = 1
+    print util.vector.pvAng
+    print util.vector.pvLength

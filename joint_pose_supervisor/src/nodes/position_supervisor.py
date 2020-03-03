@@ -33,7 +33,7 @@ class PositionSupervisor(object):
         self.instructionClient = DataframeClient()
         self.geometryUtil = GeometryUtil()
 
-        self.commander = moveit_commander.MoveGroupCommander("Arm")
+        self.commander = moveit_commander.MoveGroupCommander("friday_arm")
         self.joint_goals = []
 
         self.stateSub = rospy.Subscriber(
@@ -64,6 +64,7 @@ class PositionSupervisor(object):
         self.geometryUtil.vector.xCoor = self.instruction[1]
         self.geometryUtil.vector.yCoor = self.instruction[2]
         self.geometryUtil.vector.zCoor = self.instruction[3]
+        self.geometryUtil.vector.define_vector()
 
     def set_velacc(self):
         '''
@@ -79,7 +80,10 @@ class PositionSupervisor(object):
         Uses geometryUtil to return the equivalent
         angles of each motor
         '''
-        self.joint_goals = self.geometryUtil.return_radians()
+        self.joint_goals.append(self.geometryUtil.base_pose())
+        self.joint_goals.append(self.geometryUtil.main_pose())
+        self.joint_goals.append(self.geometryUtil.sec_pose())
+        self.joint_goals.append(self.geometryUtil.tool_pose())
 
     def submit_command(self):
         '''
@@ -98,6 +102,7 @@ class PositionSupervisor(object):
             self.update_position_vector()
             self.set_velacc()
             self.joint_radians()
+            self.submit_command()
 
 if __name__ == '__main__':
     rospy.init_node('positionSupervisor', anonymous=True)

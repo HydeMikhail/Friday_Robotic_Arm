@@ -1,0 +1,7 @@
+controller_list:
+  - name: fake_friday_arm_controller
+    joints:
+      - base_joint
+      - main_joint
+      - sec_joint
+      - tool_joint

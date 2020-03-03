@@ -1,0 +1,27 @@
+friday:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+  arm_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - base_joint
+      - main_joint
+      - sec_joint
+      - tool_joint
+    gains:
+      base_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      main_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      sec_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      tool_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+
+controller_list:
+  - name: friday/arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - base_joint
+      - main_joint
+      - sec_joint
+      - tool_joint
