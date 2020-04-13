@@ -1,7 +1,0 @@
-arm_controller:
-    type: "position_controllers/JointTrajectoryController"
-    joints:
-      - base_joint
-      - main_joint
-      - sec_joint
-      - tool_joint

@@ -1,11 +1,11 @@
 moveit_setup_assistant_config:
   URDF:
     package: friday_description
-    relative_path: urdf/arm.urdf
+    relative_path: urdf/friday.urdf.xacro
     xacro_args: ""
   SRDF:
     relative_path: config/friday.srdf
   CONFIG:
     author_name: Mikhail Hyde
     author_email: hyde.mikhail@gmail.com
-    generated_timestamp: 1583278206
+    generated_timestamp: 1586739604

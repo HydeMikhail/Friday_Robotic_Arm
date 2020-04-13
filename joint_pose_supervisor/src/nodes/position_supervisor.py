@@ -1,4 +1,4 @@
-#!/home/mhyde/vEnvs/rosPy/bin/python
+#!/home/rosvm/vEnvs/rosPy/bin/python
 
 '''
 node = /motorPosePub
@@ -75,22 +75,29 @@ class PositionSupervisor(object):
         rospy.set_param('velocityFactor', self.instruction[4])
         rospy.set_param('accelerationFactor', self.instruction[5])
 
-    def joint_radians(self):
+    def set_moveit_pose(self):
         '''
         Uses geometryUtil to return the equivalent
         angles of each motor
         '''
-        self.joint_goals.append(self.geometryUtil.base_pose())
-        self.joint_goals.append(self.geometryUtil.main_pose())
-        self.joint_goals.append(self.geometryUtil.sec_pose())
-        self.joint_goals.append(self.geometryUtil.tool_pose())
+        pose_goal = geometry_msgs.msg.Pose()
+        pose_goal.orientation.w = 1.0
+        pose_goal.position.x = 0.4
+        pose_goal.position.y = 0.1
+        pose_goal.position.z = 0.4
+
+        self.commander.set_pose_target(pose_goal)
 
     def submit_command(self):
         '''
         Commands the move group to start positioning
         '''
-        self.commander.go(self.joint_goals, wait=True)
+        self.commander.go(wait=True)
+        # Calling `stop()` ensures that there is no residual movement
         self.commander.stop()
+        # It is always good to clear your targets after planning with poses.
+        # Note: there is no equivalent function for clear_joint_value_targets()
+        self.commander.clear_pose_targets()
 
     def arduino_state_callback(self, arduinoState):
         '''
@@ -101,7 +108,7 @@ class PositionSupervisor(object):
             self.set_motion_type()
             self.update_position_vector()
             self.set_velacc()
-            self.joint_radians()
+            self.set_moveit_pose()
             self.submit_command()
 
 if __name__ == '__main__':

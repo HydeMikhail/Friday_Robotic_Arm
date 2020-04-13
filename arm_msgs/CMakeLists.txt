@@ -104,8 +104,8 @@ add_service_files(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES arm_msgs
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  LIBRARIES arm_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
