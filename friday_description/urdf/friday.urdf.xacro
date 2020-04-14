@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+
+<!--
+    friday.urdf.xacro
+    Copyright (C) 2017 Niryo
+    All rights reserved.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="friday">
+	
+	<!-- Properties -->
+
+    <xacro:property name="PI" value="3.14159265359" />
+
+    <xacro:property name="arm_offset_y" value="0" />
+    <xacro:property name="arm_offset_z" value="7" />
+    <xacro:property name="main_origin_height" value="202.628" />
+    <xacro:property name="second_origin_height" value="260.5" />
+
+    <xacro:property name="base_lower_limit" value="${-PI}" />
+    <xacro:property name="base_upper_limit" value="${PI}" />
+    <xacro:property name="main_lower_limit" value="-1.0472" />
+    <xacro:property name="main_upper_limit" value="1.0472" />
+    <xacro:property name="second_lower_limit" value="-2.53073" />
+    <xacro:property name="second_upper_limit" value="2.53073" />
+
+	<!-- Links -->
+
+    <link name="world"/>
+
+    <link name="base_fix">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+                <mesh filename="package://friday_description/meshes/dae/base_fix.dae" />
+			</geometry>
+        </visual>
+        <collision>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://friday_description/meshes/stl/base_fix.stl" />
+            </geometry>
+        </collision>
+	</link>
+
+    <link name="base_rev">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+                <mesh filename="package://friday_description/meshes/dae/base_rev.dae" />
+			</geometry>
+		</visual>
+        <collision>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://friday_description/meshes/stl/base_rev.stl" />
+            </geometry>
+        </collision>
+	</link>
+
+    <link name="main_arm">
+		<visual>
+			<origin xyz="0 ${arm_offset_y} ${arm_offset_z}" rpy="0 0 0" />
+			<geometry>
+                <mesh filename="package://friday_description/meshes/dae/main_arm.dae" />
+			</geometry>
+		</visual>
+        <collision>
+			<origin xyz="0 ${arm_offset_y} ${arm_offset_z}" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://friday_description/meshes/stl/main_arm.stl" />
+            </geometry>
+        </collision>
+	</link>
+
+    <link name="second_arm">
+		<visual>
+			<origin xyz="0 ${arm_offset_y} ${arm_offset_z}" rpy="0 0 0" />
+			<geometry>
+                <mesh filename="package://friday_description/meshes/dae/second_arm.dae" />
+			</geometry>
+		</visual>
+        <collision>
+			<origin xyz="0 ${arm_offset_y} ${arm_offset_z}" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://friday_description/meshes/stl/second_arm.stl" />
+            </geometry>
+        </collision>
+	</link>
+
+
+	<!--Joints -->
+
+    <joint name="joint_world" type="fixed">
+        <parent link="world" />
+        <child link="base_fix" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
+	<joint name="joint_1" type="revolute">
+        <parent link="base_fix" />
+        <child link="base_rev" />
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+		<limit effort="1" velocity="1.0" lower="${base_lower_limit}" upper="${base_upper_limit}" />
+	</joint>
+
+	<joint name="joint_2" type="revolute">
+        <parent link="base_rev" />
+        <child link="main_arm" />
+        <origin xyz="0 0 ${main_origin_height}" rpy="${PI/2} 0 0" />
+		<limit effort="1" velocity="1.0" lower="${main_lower_limit}" upper="${main_upper_limit}" />
+		<axis xyz="0 0 1" />
+	</joint>
+
+    <joint name="joint_3" type="revolute">
+        <parent link="main_arm" />
+        <child link="second_arm" />
+        <origin xyz="0 ${second_origin_height} 0" rpy="0 ${PI} 0" />
+		<limit effort="1" velocity="1.0" lower="${second_lower_limit}" upper="${second_upper_limit}" />
+		<axis xyz="0 0 1" />
+	</joint>
+
+</robot>

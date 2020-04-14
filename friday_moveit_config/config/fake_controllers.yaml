@@ -1,6 +1,0 @@
-controller_list:
-  - name: fake_Friday_ARM_controller
-    joints:
-      - joint_1
-      - joint_2
-      - joint_3
