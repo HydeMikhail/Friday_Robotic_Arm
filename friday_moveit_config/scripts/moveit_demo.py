@@ -66,6 +66,6 @@ def pose_goal_DEMO(orientation):
     pose_goal.position.z = 0.4
     group.set_pose_target(pose_goal)
 
-    plan = group.go(wait=True)
+    group.go(wait=True)
     group.stop()
     group.clear_pose_targets()
