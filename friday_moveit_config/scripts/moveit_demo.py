@@ -60,10 +60,10 @@ def pose_goal_DEMO(orientation):
     coordinates of the end effector
     '''
     pose_goal = geometry_msgs.msg.Pose()
-    pose_goal.orientation.w = 1.0
-    pose_goal.position.x = 0.4
-    pose_goal.position.y = 0.1
-    pose_goal.position.z = 0.4
+    pose_goal.orientation.w = orientation[0]
+    pose_goal.position.x = orientation[1]
+    pose_goal.position.y = orientation[2]
+    pose_goal.position.z = orientation[3]
     group.set_pose_target(pose_goal)
 
     group.go(wait=True)
